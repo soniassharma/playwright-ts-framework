@@ -28,8 +28,13 @@ export default defineConfig({
     // This site marks elements with data-test (not the default data-testid), so getByTestId needs to know.
     testIdAttribute: 'data-test',
 
-    // Save a trace (a step-by-step recording) only when a test is retried after failing.
-    trace: 'on-first-retry',
+    // Record a trace (a step-by-step recording) for every test, but keep it only if the test fails.
+    trace: {
+      mode: 'retain-on-failure',
+      screenshots: true, // page pictures shown in the trace viewer
+      snapshots: true, // page copies (DOM) you can inspect in the viewer
+      sources: true, // your test code, shown in the Source tab
+    },
 
     // Take a screenshot only when a test fails.
     screenshot: 'only-on-failure',
