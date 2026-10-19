@@ -19,14 +19,19 @@ export class LoginPage {
     this.error = page.getByTestId('error');
   }
 
+  // Open the site's home page, which is the login screen
   async goto() {
+    // '/' is added to the baseURL from the config
     await this.page.goto('/');
   }
 
   // The three steps every login test repeats, now written once
   async login(user: string, pass: string) {
+    // Type the username into its box
     await this.username.fill(user);
+    // Type the password into its box
     await this.password.fill(pass);
+    // Click the Login button
     await this.submit.click();
   }
 }
