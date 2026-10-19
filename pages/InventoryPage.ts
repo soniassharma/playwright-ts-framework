@@ -7,13 +7,22 @@ export class InventoryPage {
   readonly cartBadge: Locator;
   // Every product name on the page, as a list
   readonly itemNames: Locator;
+  // Every price on the page, as text like "$29.99"
+  readonly itemPrices: Locator;
   private readonly sortDropdown: Locator;
+  private readonly cartLink: Locator;
 
   constructor(private readonly page: Page) {
     this.title = page.getByTestId('title');
     this.cartBadge = page.getByTestId('shopping-cart-badge');
     this.itemNames = page.getByTestId('inventory-item-name');
+    this.itemPrices = page.getByTestId('inventory-item-price');
     this.sortDropdown = page.getByTestId('product-sort-container');
+    this.cartLink = page.getByTestId('shopping-cart-link');
+  }
+
+  async openCart() {
+    await this.cartLink.click();
   }
 
   // The slug is the product name in lowercase with dashes, e.g. "sauce-labs-backpack"
