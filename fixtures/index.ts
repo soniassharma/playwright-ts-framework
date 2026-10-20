@@ -1,7 +1,9 @@
 // base is Playwright's normal test. We extend it with our own ready-made objects.
 import { test as base } from '@playwright/test';
+// The page objects the fixtures hand to tests
 import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
+// The demo usernames and passwords, used to log in inside the inventoryPage fixture
 import users from '../test-data/users.json';
 
 // Tells TypeScript which fixtures exist and what type each one is

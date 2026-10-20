@@ -1,3 +1,4 @@
+// test and expect come from our fixtures file, so tests can ask for inventoryPage by name
 import { test, expect } from '../../fixtures';
 
 // No login steps here: the inventoryPage fixture already logged in
