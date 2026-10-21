@@ -21,14 +21,30 @@ test('standard user lands on inventory after login', async ({ page, loginPage })
   await expect(inventoryPage.title).toHaveText('Products');
 });
 
-test('locked user sees error and stays on login', async ({ page, loginPage }) => {
-  // Open the login page
-  await loginPage.goto();
-  // Try to log in as the locked-out user
-  await loginPage.login(users.locked.username, users.locked.password);
+// Each entry below is one bad login. The loop after it turns every entry into its own test.
+const badLogins = [
+  // The locked user has the right password but is not allowed in
+  { name: 'locked user', user: users.locked.username, pass: users.locked.password, msg: /locked out/ },
+  // A real username with the wrong password
+  { name: 'wrong password', user: users.standard.username, pass: 'not_the_password', msg: /do not match/ },
+  // Password filled in, username left empty
+  { name: 'empty username', user: '', pass: users.standard.password, msg: /Username is required/ },
+  // Username filled in, password left empty
+  { name: 'empty password', user: users.standard.username, pass: '', msg: /Password is required/ },
+];
 
-  // The red error box should say the user is locked out
-  await expect(loginPage.error).toContainText('locked out');
-  // We should not have moved on to the products page
-  await expect(page).not.toHaveURL(/inventory/);
-});
+// Go through the list one entry at a time
+for (const c of badLogins) {
+  // The test name includes the case name, so each shows up separately in the report
+  test(`login rejected: ${c.name}`, async ({ page, loginPage }) => {
+    // Open the login page
+    await loginPage.goto();
+    // Try to log in with this entry's username and password
+    await loginPage.login(c.user, c.pass);
+
+    // The red error box should show this entry's message
+    await expect(loginPage.error).toContainText(c.msg);
+    // We should not have moved on to the products page
+    await expect(page).not.toHaveURL(/inventory/);
+  });
+}
