@@ -6,7 +6,8 @@ import { InventoryPage } from '../../pages/InventoryPage';
 import users from '../../test-data/users.json';
 
 // This test has to do the login itself, so it uses loginPage and not the logged-in inventoryPage
-test('standard user lands on inventory after login', async ({ page, loginPage }) => {
+// { tag: '@smoke' } marks this as a quick must-pass check, so `npm run test:smoke` picks it up
+test('standard user lands on inventory after login', { tag: '@smoke' }, async ({ page, loginPage }) => {
   // InventoryPage knows where things are on the products screen. We need it to check the heading.
   const inventoryPage = new InventoryPage(page);
 

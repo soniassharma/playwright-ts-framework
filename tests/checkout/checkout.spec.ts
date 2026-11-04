@@ -7,7 +7,8 @@ import { CheckoutPage } from '../../pages/CheckoutPage';
 import details from '../../test-data/checkout.json';
 
 // inventoryPage is a fixture: the browser is already logged in and sitting on the products page
-test('checkout happy path ends on the thank you screen', async ({ page, inventoryPage }) => {
+// Smoke: the full purchase is the most important path in the shop
+test('checkout happy path ends on the thank you screen', { tag: '@smoke' }, async ({ page, inventoryPage }) => {
   // Build the page objects for the next two screens from the same browser tab
   const cartPage = new CartPage(page);
   const checkoutPage = new CheckoutPage(page);
