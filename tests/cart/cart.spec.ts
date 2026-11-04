@@ -3,7 +3,8 @@ import { test, expect } from '../../fixtures';
 import { CartPage } from '../../pages/CartPage';
 
 // inventoryPage is a fixture: the browser is already logged in and sitting on the products page
-test('adding one item sets the cart badge to 1', async ({ inventoryPage }) => {
+// Smoke: adding to the cart is a core step, so it must always work
+test('adding one item sets the cart badge to 1', { tag: '@smoke' }, async ({ inventoryPage }) => {
   // Click "Add to cart" on the backpack. The slug is the product name in lowercase with dashes.
   await inventoryPage.addToCart('sauce-labs-backpack');
 
